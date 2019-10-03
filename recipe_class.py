@@ -1,5 +1,9 @@
 # define a class recipe
-
+class Recipe():
+    def __init__(self, recipename, ingredients, postcode):
+        self.recipe_name = recipename
+        self.ingredients = ingredients
+        self.postcode = postcode
 
     # Give it the needed attributes
 

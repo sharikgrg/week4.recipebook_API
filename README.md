@@ -5,13 +5,13 @@ the specs
 
 part one:
 
-    as a user i can create one recipe
+    as a user i can create one recipe /
     
-    as a user i can get all recipes
+    as a user i can get all recipes /
     
-    as a user i can read one recipe
+    as a user i can read one recipe  /
     
-    as a user i can destroy one recipe
+    as a user i can destroy one recipe 
     
     as a user i should be able to export one recipe to 
     
