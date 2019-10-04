@@ -27,10 +27,9 @@ class Recipe_db ():
         query = self.execute_cursor(f"SELECT * FROM {table} WHERE RecipeName like '%{recipename}%'").fetchall()
         print(query)
 
-    def destroy_one_recipe(self,table, recipename):
-        query = self.execute_cursor(f"DELETE FROM {}").fetchall()
-        print(query)
-
+    def destroy_one_recipe(self,table, column, recipename):
+        self.execute_cursor(f"DELETE FROM {table} WHERE {column} = '{recipename}'")
+        self.conn_recipedb.commit()
 
 
 #     # have a characteristics to access the db

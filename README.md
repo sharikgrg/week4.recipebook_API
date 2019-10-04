@@ -13,7 +13,7 @@ part one:
     
     as a user i can destroy one recipe 
     
-    as a user i should be able to export one recipe to 
+    as a user i should be able to export one recipe to database /
     
     as a user i should be able to get more info on the location where the websites are created
     
