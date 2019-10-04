@@ -1,5 +1,6 @@
 # define a class to access our db
 import pyodbc
+import requests
 class Recipe_db ():
 
     def __init__(self, server, database, username, password):
@@ -25,12 +26,21 @@ class Recipe_db ():
 
     def retrieving_one_recipe(self,table, recipename):
         query = self.execute_cursor(f"SELECT * FROM {table} WHERE RecipeName like '%{recipename}%'").fetchall()
-        print(query)
+        return str(query)
+
+    def reading_one_recipe(self,file,recipe):
+        try:
+            with open(file, 'a') as opened_file:
+                opened_file.write(recipe + '\n')
+        except FileNotFoundError:
+            print('File not found')
 
     def destroy_one_recipe(self,table, column, recipename):
         self.execute_cursor(f"DELETE FROM {table} WHERE {column} = '{recipename}'")
         self.conn_recipedb.commit()
 
+    def location_finder(self, ID):
+        self.execute_cursor(f"SELECT Postcode FROM recipe WHERE FoodID = {ID}")
 
 #     # have a characteristics to access the db
 #
