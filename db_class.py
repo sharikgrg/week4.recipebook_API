@@ -22,16 +22,17 @@ class Recipe_db ():
     def retrieving_all_recipe(self, table):
         query = self.execute_cursor(f"SELECT * FROM {table}").fetchall()
         for data in query:
-            print(f' {data[0]}) Recipe name: {data[1]} - Ingredients: {data[2]} - Postcode: {data[3]}')
+            return f' {data[0]}) Recipe name: {data[1]} - Ingredients: {data[2]} - Postcode: {data[3]}'
 
-    def retrieving_one_recipe(self,table, recipename):
-        query = self.execute_cursor(f"SELECT * FROM {table} WHERE RecipeName like '%{recipename}%'").fetchall()
-        return str(query)
+    def retrieving_one_recipe(self, recipename):
+        query = self.execute_cursor(f"SELECT * FROM recipe WHERE RecipeName like '%{recipename}%'").fetchall()
+        return query
 
-    def reading_one_recipe(self,file,recipe):
+    def reading_one_recipe(self,recipename,file):
+
         try:
             with open(file, 'a') as opened_file:
-                opened_file.write(recipe + '\n')
+                opened_file.write(f"{self.retrieving_one_recipe(recipename)}\n")
         except FileNotFoundError:
             print('File not found')
 
@@ -40,7 +41,10 @@ class Recipe_db ():
         self.conn_recipedb.commit()
 
     def location_finder(self, ID):
-        self.execute_cursor(f"SELECT Postcode FROM recipe WHERE FoodID = {ID}")
+        postcode = self.execute_cursor(f"SELECT Postcode FROM recipe WHERE RecipeName = '{ID}'").fetchone()[0]
+        request_postcode = requests.get('http://api.postcodes.io/postcodes/' + postcode)
+        json_postcode = request_postcode.json()
+        return json_postcode['result']['postcode']
 
 #     # have a characteristics to access the db
 #
